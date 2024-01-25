@@ -21,7 +21,7 @@ SECTIONS
 		*(.data)
 		. = ALIGN(4);
 		_E_DATA = . ;
-	}> flash
+	}>sram AT> flash
 	.bss :
 	{
 	_S_bss = . ;

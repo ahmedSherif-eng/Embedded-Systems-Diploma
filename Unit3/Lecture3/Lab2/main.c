@@ -31,6 +31,8 @@
 #define RCC_IOPAEN			2
 #define GPIOA_CRH_MASK		0xFF0FFFFF
 #define PORTA_PIN13			13
+unsigned char g_variables[]={1,2,3};
+unsigned char const c_variables[]= {1,2,3};
 int main(void)
 {
 	SET_BIT(RCC_APB2ENR,RCC_IOPAEN);
