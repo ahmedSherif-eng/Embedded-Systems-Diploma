@@ -1,5 +1,5 @@
 #include<stdint.h>
-#define STACK_start_SP 0x20001000
+extern long* _stack_top;
 extern int main(void);
 void Reset_Handler(void);
 void Default_Handler(void)
@@ -12,7 +12,7 @@ void MMFault_Handler(void)__attribute__((weak, alias("Default_Handler")));;
 void BusFault_Handler(void)__attribute__((weak, alias("Default_Handler")));;
 void UsageFault_Handler(void)__attribute__((weak, alias("Default_Handler")));;
 uint32_t vectors[] __attribute__((section(".vectors")))={
-	STACK_start_SP,
+	(uint32_t) &_stack_top,
 	(uint32_t) &NMI_Handler,
 	(uint32_t) &HardFault_Handler,
 	(uint32_t) &MMFault_Handler,
