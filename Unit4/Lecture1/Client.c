@@ -9,19 +9,24 @@
 #include"LIFO.h"
 int main()
 {
-	LIFO_Buffer_t buff;
-	uint8_t arr[10];
-	uint8_t item=5;
-	printf("Initialize Error Status is %d \n", LIFO_Init(&buff, arr, 10));
-	for (int i =0; i < 11; i++)
+	FIFO_Buffer_t buff;
+	ELEMENT_TYPE arr[10];
+	ELEMENT_TYPE item=5;
+	FIFO_Status status;
+	printf("Initialize Error Status is %d \n", FIFO_Init(&buff, arr, 10));
+	for (int i =0; i < 10; i++)
 	{
-		printf("Pushing number %d status-->%d\n",i,LIFO_Push(&buff,i));
+		printf("Pushing number %d status-->%d\n",i,FIFO_Enqueue(&buff,i));
 	}
 	printf("------------------------------------------------------------\n");
-	for (int i =0; i < 11; i++)
+	for (int i =0; i < 2; i++)
 	{
-		 LIFO_Pop(&buff,&item);
-		printf("Popping:%d status-->\n",item);
+		status = FIFO_Dequeue(&buff,&item);
+		printf("Dequeue:%d status-->%d\n",item,status);
+	}
+	for (int i =0; i < 3; i++)
+	{
+		printf("Pushing number %d status-->%d\n",i,FIFO_Enqueue(&buff,i));
 	}
 	return 0;
 }
