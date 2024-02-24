@@ -11,7 +11,7 @@
 #include<conio.h>
 struct S_Data{
 uint32_t ID;
-uint8_t Name[40];
+char Name[40];
 float height;
 };
 struct S_Node {
@@ -29,11 +29,20 @@ LL_STATUS getCount(uint32_t *count);
 LL_STATUS removeLast();
 LL_STATUS removeFirst();
 //LL_STATUS insertIndex(uint8_t index);
-int main(){
-
-
-
-	return 0;
+int main() {
+    LL_STATUS status = addItem();
+    uint32_t count;
+    if (status != LL_NOERROR) {
+        printf("Error adding item: %d\n", status);
+        return 1;
+    }
+    status = getCount(&count);
+    if (status != LL_NOERROR) {
+        printf("Error adding item: %d\n", status);
+        return 1;
+    }
+    printf("Count = %d",count);
+    return 0;
 }
 LL_STATUS addItem(){
 	LL_STATUS status = LL_NOERROR;
@@ -55,11 +64,17 @@ LL_STATUS addItem(){
 		newRec -> Student =(struct S_Data *)malloc(sizeof(struct S_Data));
 		printf("----------------------------------------------------\n");
 		printf("Student Name: ");
-		scanf("%s\n",newRec -> Student ->Name);
+		fflush(stdout);
+		gets(newRec -> Student ->Name);
+		fflush(stdin);
 		printf("Student ID: ");
-		scanf("%d\n", &(newRec -> Student -> ID));
+		fflush(stdout);
+		scanf("%d", &(newRec -> Student -> ID));
+		fflush(stdin);
 		printf("Student height: ");
-		scanf("%f\n", &(newRec -> Student -> height));
+		fflush(stdout);
+		scanf("%f", &(newRec -> Student -> height));
+		fflush(stdin);
 		printf("----------------------------------------------------\n");
 	}
 	else
@@ -72,6 +87,7 @@ LL_STATUS getCount(uint32_t *count){
 	LL_STATUS status = LL_NOERROR;
 	*count = 0;
 	if (gpBase){
+		(*count)++;
 		struct S_Node* temp = gpBase;
 		while(temp -> Next){
 			temp = temp -> Next;
@@ -93,6 +109,7 @@ LL_STATUS removeLast(){
 			temp = temp -> Next;
 		}
 		prevTemp -> Next = NULL;
+		free(temp);
 	}
 	else
 		status = LL_NULL;
@@ -100,8 +117,10 @@ LL_STATUS removeLast(){
 }
 LL_STATUS removeFirst(){
 	LL_STATUS status = LL_NOERROR;
+	struct S_Node* temp = gpBase;
 	if (gpBase){
 		gpBase =gpBase -> Next;
+		free(temp);
 	}
 	else
 		status = LL_NULL;
